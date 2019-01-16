@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import {BrowserRouter as MyRouter, Route} from 'react-router-dom';
+
 import './App.css';
 import Header from './components/layout/header.js'
 import Goals from './components/goals/goals.js'
 import AddGoal from './components/add_goal/addGoal'
+import About from './components/pages/about'
 import uuid from 'uuid'
 
 class App extends Component {
@@ -60,19 +63,31 @@ class App extends Component {
   render() {
     console.log(this.state.goals);
     return (
-      <div className="App">
-        <div className="container">
-          <Header />
-          <AddGoal 
-            addNewGoal={this.addNewGoal}
-          />
-          <Goals 
-            goals={this.state.goals} 
-            markComplete={this.markComplete}
-            removeGoal={this.removeGoal}
-          />
+      <MyRouter>
+        <div className="App">
+          <div className="container">
+            <Header />
+            <Route exact path="/" 
+              render={
+                props => {
+                  return (
+                    <React.Fragment>                    
+                      <AddGoal addNewGoal={this.addNewGoal}/>
+                      <Goals 
+                        goals={this.state.goals} 
+                        markComplete={this.markComplete}
+                        removeGoal={this.removeGoal}
+                      />
+                    </React.Fragment>
+                )}
+              }
+            />
+            <Route 
+              exact path="/about" component={About}
+            />           
+          </div>
         </div>
-      </div>
+      </MyRouter>
     );
   }
 }
