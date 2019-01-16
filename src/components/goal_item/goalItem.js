@@ -29,7 +29,7 @@ class GoalItem extends Component {
                     <button 
                         style={btnStyle}
                         onClick={this.props.removeGoal.bind(this, id) }
-                    > Delete Goal</button>
+                    > X </button>
                 </p>
             </div>
         );
@@ -44,8 +44,9 @@ const btnStyle = {
     background: '#ff0000',
     color: '#fff',
     border: 'none',
-    borderRadius: '15%',
+    borderRadius: '50%',
     cursor: 'pointer',
-    float: 'right'
+    float: 'right',
+    margin: '2px'
 }
 export default GoalItem;

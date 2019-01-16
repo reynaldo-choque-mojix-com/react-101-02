@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
+import Header from './components/layout/header.js'
 import Goals from './components/goals/goals.js'
+import AddGoal from './components/add_goal/addGoal'
+import uuid from 'uuid'
 
 class App extends Component {
   state = {
     goals: [{
-      id: 1,
+      id: uuid.v4(),
       title: 'Learn ReactJs',
       completed: false 
     }, {
-      id: 2,
+      id: uuid.v4(),
       title: 'Become Yellow Topcoder',
       completed: true
     }, {
-      id: 3,
+      id: uuid.v4(),
       title: 'Become Red Codeforces',
       completed: false
     }]
@@ -42,15 +45,33 @@ class App extends Component {
     });
   }
 
+  addNewGoal = (title) => {
+    console.log("sent ", title);
+    const newGoal = {
+      id: uuid.v4(),
+      title: title,
+      completed: false,
+    };
+    this.setState({
+      goals: [ ...this.state.goals, newGoal ]
+    });
+  }
+
   render() {
     console.log(this.state.goals);
     return (
       <div className="App">
-        <Goals 
-          goals={this.state.goals} 
-          markComplete={this.markComplete}
-          removeGoal={this.removeGoal}
-        />
+        <div className="container">
+          <Header />
+          <AddGoal 
+            addNewGoal={this.addNewGoal}
+          />
+          <Goals 
+            goals={this.state.goals} 
+            markComplete={this.markComplete}
+            removeGoal={this.removeGoal}
+          />
+        </div>
       </div>
     );
   }
