@@ -2,28 +2,29 @@ import React, { Component } from 'react';
 import {BrowserRouter as MyRouter, Route} from 'react-router-dom';
 
 import './App.css';
-import Header from './components/layout/header.js'
-import Goals from './components/goals/goals.js'
-import AddGoal from './components/add_goal/addGoal'
-import About from './components/pages/about'
-import uuid from 'uuid'
+import Header from './components/layout/header.js';
+import Goals from './components/goals/goals.js';
+import AddGoal from './components/add_goal/addGoal';
+import About from './components/pages/about';
+import uuid from 'uuid';
+import axios from 'axios';
 
 class App extends Component {
   state = {
-    goals: [{
-      id: uuid.v4(),
-      title: 'Learn ReactJs',
-      completed: false 
-    }, {
-      id: uuid.v4(),
-      title: 'Become Yellow Topcoder',
-      completed: true
-    }, {
-      id: uuid.v4(),
-      title: 'Become Red Codeforces',
-      completed: false
-    }]
-  } 
+    goals: []
+  }
+
+  componentDidMount() {
+    axios.get('https://raw.githubusercontent.com/reynaldo-choque-mojix-com/react-101-02/development/data/my_goals.json')
+      .then(
+        res => {
+          console.log("get", res.data.data);
+          this.setState({
+            goals: res.data.data
+          });
+        }
+      )
+  }
 
   markComplete = (id) => {
     console.log("hi from App.js", id);
